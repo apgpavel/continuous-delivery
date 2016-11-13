@@ -1,0 +1,42 @@
+resources:
+- name: git-repo
+  type: git
+  source:
+    uri: https://github.com/hamvocke/continuous-delivery.git
+    branch: master
+
+jobs:
+- name: unit-test
+  plan:
+  - get: git-repo
+    trigger: true
+  - task: install
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: python
+          tag: 'onbuild'
+      inputs:
+      - name: git-repo
+      run:
+        path: pip
+        args:
+          - install
+          - -r
+          - git-repo/requirements.txt
+  - task: test
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: python
+          tag: 'onbuild'
+      inputs:
+      - name: git-repo
+      run:
+        path: pytest
+        args:
+          - git-repo/
