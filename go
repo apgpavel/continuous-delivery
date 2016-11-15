@@ -27,9 +27,10 @@ setup() {
   fi
 
   echo "★ Installing system-wide dependencies"
-  apt-get install -y python pip virtualenv
+  apt-get install -y python pip
 
   echo "★ Setting up virtualenv"
+  pip install virtualenv
   virtualenv venv
 
   activate_virtualenv
