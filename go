@@ -25,10 +25,7 @@ setup() {
     echo "★ Removing old virtualenv"
     rm -rf venv/
   fi
-
-  echo "★ Installing system-wide dependencies"
-  apt-get install -y python pip
-
+  
   echo "★ Setting up virtualenv"
   pip install virtualenv
   virtualenv venv
