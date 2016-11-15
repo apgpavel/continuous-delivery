@@ -3,6 +3,7 @@
 set -e
 
 action=$1
+dir=`dirname $0`
 
 usage() {
   echo -e "Usage: $0 <command>\n"
@@ -16,24 +17,24 @@ usage() {
 activate_virtualenv() {
   if [[ -z $VIRTUAL_ENV ]]; then
     echo "★ Activating virtualenv"
-    source venv/bin/activate
+    source $dir/venv/bin/activate
   fi
 }
 
 setup() {
-  if [[ -d venv/ ]]; then
+  if [[ -d $dir/venv/ ]]; then
     echo "★ Removing old virtualenv"
-    rm -rf venv/
+    rm -rf $dir/venv/
   fi
-  
+
   echo "★ Setting up virtualenv"
   pip install virtualenv
-  virtualenv venv
+  virtualenv $dir/venv
 
   activate_virtualenv
 
   echo "★ Installing Python dependencies"
-  pip install -r requirements.txt
+  pip install -r $dir/requirements.txt
 
   exit 0;
 }
