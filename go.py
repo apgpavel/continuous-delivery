@@ -13,7 +13,7 @@ def load_config():
     config = yaml.load(config_file)
 
 def marker():
-    click.echo(click.style('★ ', fg='yellow'), nl=False)
+    click.echo(click.style(u'\u2605 ', fg='yellow'), nl=False)
 
 @click.group()
 def cli():
