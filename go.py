@@ -42,6 +42,8 @@ def build(version):
 
 @cli.command()
 def push():
+    marker()
+    click.echo('Pushing docker image')
     tag = '{0}/{1}:latest'.format(
         config.get('dockerhub_user'),
         config.get('project_name')
