@@ -41,6 +41,15 @@ def build(version):
     call(['docker', 'build', directory, '-t', tag])
 
 @cli.command()
+def push():
+    tag = '{0}/{1}:latest'.format(
+        config.get('dockerhub_user'),
+        config.get('project_name')
+    )
+
+    call(['docker', 'push', tag])
+
+@cli.command()
 def test():
     marker()
     click.echo('Running tests')
