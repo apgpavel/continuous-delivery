@@ -1,6 +1,6 @@
 from helloworld import app
 
-app = app.app.test_client()
+app = app.test_client()
 
 
 def test_should_return_200_status():

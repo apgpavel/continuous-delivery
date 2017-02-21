@@ -57,6 +57,13 @@ def test():
     click.echo('Running tests')
     pytest.main()
 
+@cli.command()
+def run():
+    marker()
+    click.echo('Running application')
+    call(['gunicorn', '-w', '4', 'helloworld:app', '-b', 'localhost:5000'])
+
+
 if __name__ == '__main__':
     load_config()
     cli()
