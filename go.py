@@ -3,6 +3,7 @@ import click
 import pytest
 import os
 import yaml
+import paramiko
 from subprocess import call
 
 config = {}
@@ -64,6 +65,25 @@ def deploy(environment):
     marker()
     click.echo('Deploying to ', nl=False)
     click.echo(click.style(environment, fg='green', bold=True))
+    
+    try:
+        client = paramiko.SSHClient()
+        client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        client.load_system_host_keys()
+        client.connect(hostname=config.get('ssh_host'), username=config.get('ssh_user')
+        tag = '{0}/{1}:latest'.format(
+            config.get('dockerhub_user'),
+            config.get('project_name')
+        )
+        stdin, stdout, stderr = client.exec_command('docker pull {0}'.format(tag))
+        click.echo(stdout.read())
+        stdin, stdout, stderr = client.exec_command('docker run -d -p 5000:5000 {0}'.format(tag))
+        click.echo(stdout.read())
+        client.close()
+    except paramiko.SSHException as err:
+        click.echo(click.style('Error: ', fg='red', bold=True), nl=False)
+        click.echo('Could not connect to server. You need to manually establish a connection first to add it to your known hosts')
+        click.echo(err)
 
 
 @cli.command()
