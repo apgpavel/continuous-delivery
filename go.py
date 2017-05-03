@@ -86,7 +86,7 @@ def push():
     marker()
     click.echo('Pushing docker image')
 
-    call(['docker', 'push', tag])
+    call(['docker', 'push', config['docker_tag'])
 
 
 @cli.command()
