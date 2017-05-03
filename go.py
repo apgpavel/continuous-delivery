@@ -47,7 +47,7 @@ def error():
 
 @click.group()
 def cli():
-    print(config)
+    pass
 
 
 @cli.command()
