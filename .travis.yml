@@ -18,4 +18,4 @@ script:
     - ./go test
     - ./go build
     - ./go push
-    - ./go deploy
+    - ./go deploy staging
