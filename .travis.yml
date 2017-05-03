@@ -18,8 +18,5 @@ script:
     - ./go test
     - ./go build
     - ./go push
-
-deploy: 
-    provider: script
-    script: ./go deploy staging
+    - ./go deploy staging
 
