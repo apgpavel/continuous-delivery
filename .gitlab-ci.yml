@@ -1,10 +1,27 @@
-test:
-  stage: test
-  script:
-    - apt-get update -qy
-    - apt-get install -y python-dev python-pip
+image: python:3.5
+
+before_script:
+    - apt update
+    - apt install node
     - ./go setup
-    - ./go test
-    - ./go build
-    - ./go push
-    - ./go deploy staging
+
+stages:
+    - build
+    - test
+    - deploy
+
+test:
+    stage: test
+    script:
+        - ./go test
+
+build:
+    stage: build
+    script:
+        - ./go build
+        - ./go push
+
+deploy:
+    stage: deploy
+    script:
+        - ./go deploy staging
