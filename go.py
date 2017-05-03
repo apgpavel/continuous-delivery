@@ -19,12 +19,22 @@ def load_config():
         config['dockerhub_user'],
         config['project_name']
     )
+    resolve_env_vars(config)
 
+
+def resolve_env_vars(config):
     placeholder_pattern = re.compile('^\${(.*)}$')
     for key, value in config.items():
         match = placeholder_pattern.search(value)
         if(match):
-            config[key] = os.environ[match.group(1)]
+            value_from_env = os.environ.get(match.group(1), None)
+
+            if not value_from_env:
+                error()
+                click.echo('Environment variable {0} not found (was declared in go.yml)'.format(match.group(1)))
+                exit(1)
+            else: 
+                config[key] = value_from_env
 
 
 def marker():
