@@ -1,0 +1,4 @@
+project_name:   continuous-delivery
+dockerhub_user: hamvocke
+ssh_host: ${SSH_HOST}
+ssh_user: ${SSH_USER}
