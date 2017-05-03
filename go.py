@@ -84,8 +84,11 @@ def functionalTest(environment):
 @cli.command()
 def push():
     marker()
-    click.echo('Pushing docker image')
+    click.echo('Logging in at docker registry')
+    call(['docker', 'login', '-u', config['docker_user'], '-p', config['docker_password']])
 
+    marker()
+    click.echo('Pushing docker image')
     call(['docker', 'push', config['docker_tag']])
 
 
