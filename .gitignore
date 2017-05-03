@@ -5,3 +5,4 @@ __pycache__
 *.pyc
 go.yml
 node_modules/
+reports/
