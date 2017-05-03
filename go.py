@@ -4,7 +4,8 @@ import pytest
 import os
 import yaml
 import paramiko
-from subprocess import call
+import time
+from subprocess import call, Popen
 
 config = {}
 
@@ -13,10 +14,18 @@ def load_config():
     config_file = open('go.yml', 'r')
     global config
     config = yaml.load(config_file)
+    config['docker_tag'] = '{0}/{1}'.format(
+        config['dockerhub_user'],
+        config['project_name']
+    )
 
 
 def marker():
     click.echo(click.style(u'\u2605 ', fg='yellow'), nl=False)
+
+
+def error():
+    click.echo(click.style(u'\u26a0 Error: ', fg='red', bold=True), nl=False)
 
 
 @click.group()
@@ -32,10 +41,7 @@ def build(version):
     click.echo(click.style(version, fg='green', bold=True))
 
     directory = os.path.dirname(__file__)
-    directory_name = os.getcwd().split(os.sep)[-1]
-    project_name = config.get('project_name', directory_name)
-    dockerhub_user = config.get('dockerhub_user')
-    tag = '{0}/{1}:{2}'.format(dockerhub_user, project_name, version)
+    tag = '{0}:{1}'.format(config['docker_tag'], version)
 
     call(['docker', 'build', directory, '-t', tag])
 
@@ -48,13 +54,20 @@ def test():
 
 
 @cli.command()
+@click.argument('environment', default='default')
+def functionalTest(environment):
+    marker()
+    click.echo('Running functional tests')
+    phantom = Popen(['./node_modules/.bin/phantomjs', '-w'])
+    time.sleep(3)
+    call(['./node_modules/.bin/nightwatch', '--env', environment])
+    phantom.terminate()
+
+
+@cli.command()
 def push():
     marker()
     click.echo('Pushing docker image')
-    tag = '{0}/{1}:latest'.format(
-        config.get('dockerhub_user'),
-        config.get('project_name')
-    )
 
     call(['docker', 'push', tag])
 
@@ -70,18 +83,17 @@ def deploy(environment):
         client = paramiko.SSHClient()
         client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         client.load_system_host_keys()
-        client.connect(hostname=config.get('ssh_host'), username=config.get('ssh_user')
-        tag = '{0}/{1}:latest'.format(
-            config.get('dockerhub_user'),
-            config.get('project_name')
-        )
+        client.connect(hostname=config.get('ssh_host'), username=config.get('ssh_user'))
+        
+        tag = '{0}:latest'.format(config['docker_tag'], 'latest')
+        
         stdin, stdout, stderr = client.exec_command('docker pull {0}'.format(tag))
         click.echo(stdout.read())
         stdin, stdout, stderr = client.exec_command('docker run -d -p 5000:5000 {0}'.format(tag))
         click.echo(stdout.read())
         client.close()
     except paramiko.SSHException as err:
-        click.echo(click.style('Error: ', fg='red', bold=True), nl=False)
+        error()
         click.echo('Could not connect to server. You need to manually establish a connection first to add it to your known hosts')
         click.echo(err)
 

@@ -1,0 +1,32 @@
+{
+    "src_folders" : ["functionalTests"],
+    "output_folder" : "reports",
+
+    "selenium" : {
+	"start_process" : false
+    },
+
+    "test_settings" : {
+	"default" : {
+	    "launch_url" : "http://localhost:5000",
+	    "selenium_port"  : 8910,
+	    "selenium_host"  : "localhost",
+	    "silent": true,
+	    "screenshots" : {
+		"enabled" : false,
+		"path" : ""
+	    },
+	    "desiredCapabilities": {
+		"browserName" : "phantomjs",
+		"javascriptEnabled" : true,
+		"acceptSslCerts" : true,
+		"phantomjs.binary.path" : "node_modules/.bin/phantomjs",
+		"phantomjs.cli.args" : []
+	    }
+
+	},
+	"staging" : {
+	    "launch_url" : "http://207.154.255.124"
+	}
+    }
+}

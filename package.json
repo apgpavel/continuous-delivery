@@ -1,0 +1,26 @@
+{
+  "name": "continuous-delivery",
+  "version": "1.0.0",
+  "description": "skeleton project for setting up continuous delivery",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hamvocke/continuous-delivery.git"
+  },
+  "author": "Ham Vocke",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hamvocke/continuous-delivery/issues"
+  },
+  "homepage": "https://github.com/hamvocke/continuous-delivery#readme",
+  "dependencies": {
+    "nightwatch": "^0.9.14",
+    "phantomjs-prebuilt": "^2.1.14"
+  }
+}

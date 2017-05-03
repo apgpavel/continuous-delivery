@@ -26,6 +26,9 @@ setup() {
 
   echo -e "\033[33m★\033[39m Installing Python dependencies"
   pip install -r $dir/requirements.txt
+  
+  echo -e "\033[33m★\033[39m Installing npm dependencies"
+  npm install
 }
 
 if [[ $action == "setup" ]]; then
