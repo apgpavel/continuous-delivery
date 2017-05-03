@@ -120,7 +120,6 @@ def run():
     marker()
     click.echo('Running application')
     call(['docker', 'run', '-d', '-p', '5000:5000', config.docker_tag])
-    call(['gunicorn', '-w', '4', 'helloworld:app', '-b', 'localhost:5000'])
 
 
 if __name__ == '__main__':
