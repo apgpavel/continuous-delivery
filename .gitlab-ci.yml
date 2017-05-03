@@ -2,7 +2,7 @@ image: python:3.5
 
 before_script:
     - apt update
-    - apt install -y node npm
+    - apt install -y nodejs npm
     - ./go setup
 
 stages:
