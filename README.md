@@ -5,3 +5,9 @@
 ## Getting Started
 Configure your environment by renaming `go.yml.example` to `go.yml` and replace all placeholders with your configuration values.
 
+If you have any secrets you don't want to check in to version control you can declare variables in your `go.yml` file and provide the values as environment variables, e.g.:
+    
+    # go.yml
+    my_secret = ${SOME_ENV_VAR}
+
+Now you simply need to make sure that `SOME_ENV_VAR` is set in your environment. You can rename `env.example` to `.env` and add all your environment variables there and then source it using `source .env`.
