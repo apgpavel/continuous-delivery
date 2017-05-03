@@ -3,5 +3,8 @@ test:
   script:
     - apt-get update -qy
     - apt-get install -y python-dev python-pip
-    - pip install -r requirements.txt
-    - pytest
+    - ./go setup
+    - ./go test
+    - ./go build
+    - ./go push
+    - ./go deploy staging
