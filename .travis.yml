@@ -17,10 +17,9 @@ install: ./go setup
 script: 
     - ./go test
     - ./go build
+    - ./go push
 
 deploy: 
     provider: script
-    script: 
-        - ./go push
-        - ./go deploy staging
+    script: ./go deploy staging
 
