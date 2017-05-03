@@ -5,6 +5,7 @@ import os
 import yaml
 import paramiko
 import time
+import re
 from subprocess import call, Popen
 
 config = {}
@@ -19,6 +20,12 @@ def load_config():
         config['project_name']
     )
 
+    placeholder_pattern = re.compile('^\${(.*)}$')
+    for key, value in config.items():
+        match = placeholder_pattern.search(value)
+        if(match):
+            config[key] = os.environ[match.group(1)]
+
 
 def marker():
     click.echo(click.style(u'\u2605 ', fg='yellow'), nl=False)
@@ -30,7 +37,7 @@ def error():
 
 @click.group()
 def cli():
-    pass
+    print(config)
 
 
 @cli.command()
@@ -83,7 +90,7 @@ def deploy(environment):
         client = paramiko.SSHClient()
         client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         client.load_system_host_keys()
-        client.connect(hostname=config.get('ssh_host'), username=config.get('ssh_user'))
+        client.connect(hostname=config['ssh_host'], username=config['ssh_user'])
         
         tag = '{0}:latest'.format(config['docker_tag'], 'latest')
         

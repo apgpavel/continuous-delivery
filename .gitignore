@@ -6,3 +6,4 @@ __pycache__
 go.yml
 node_modules/
 reports/
+.env
