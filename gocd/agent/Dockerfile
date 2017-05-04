@@ -1,5 +1,8 @@
 FROM gocd/gocd-agent-alpine-3.5:v17.4.0
 
+ADD ssh/* /home/go/.ssh/
+RUN chown -R go:go /home/go/.ssh/
+
 RUN apk add --update \
     gcc \
     g++ \
@@ -12,6 +15,7 @@ RUN apk add --update \
     build-base \
     libffi \
     nodejs \
+    docker \
   && pip install virtualenv \
   && rm -rf /var/cache/apk/*
 
