@@ -15,7 +15,6 @@ RUN apk add --update \
     build-base \
     libffi \
     nodejs \
-    docker \
   && pip install virtualenv \
   && rm -rf /var/cache/apk/*
 

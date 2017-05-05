@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cruise xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="cruise-config.xsd" schemaVersion="90">
+  <server artifactsdir="artifacts" agentAutoRegisterKey="a8f35d49-e8f2-424b-9177-d07e666090eb" commandRepositoryLocation="default" serverId="c8c0d35d-2c8a-45d5-9f39-39839836e015" />
+  <config-repos>
+    <config-repo plugin="yaml.config.plugin">
+      <git url="https://github.com/hamvocke/continuous-delivery.git" />
+    </config-repo>
+  </config-repos>
+</cruise>
