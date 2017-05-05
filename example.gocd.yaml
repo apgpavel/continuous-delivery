@@ -1,5 +1,6 @@
 pipelines:
     hello-world:
+        group: example
         materials:
             hello-world-git:
                 git: https://github.com/hamvocke/kudos.git
