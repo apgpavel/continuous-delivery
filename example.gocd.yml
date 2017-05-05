@@ -1,0 +1,45 @@
+pipelines:
+    hello-world:
+        materials:
+            hello-world-git:
+                git: https://github.com/hamvocke/kudos.git
+        stages:
+            - test:
+                jobs:
+                    setup:
+                        tasks:
+                            - exec:
+                                command: ./go
+                                arguments:
+                                    - setup
+                    test:
+                        tasks:
+                            - exec:
+                                command: ./go
+                                arguments:
+                                    - test
+            - build:
+                jobs:
+                    package:
+                        tasks:
+                            - exec:
+                                command: ./go
+                                arguments:
+                                    - build
+                    push:
+                        tasks:
+                            - exec:
+                                command: ./go
+                                arguments:
+                                    - push
+
+            - deploy:
+                jobs:
+                    deploy:
+                        tasks:
+                            - exec:
+                                command: ./go
+                                arguments:
+                                    - deploy
+                                    - staging
+
