@@ -3,7 +3,7 @@ pipelines:
         group: example
         materials:
             hello-world-git:
-                git: https://github.com/hamvocke/kudos.git
+                git: https://github.com/hamvocke/continuous-delivery.git
         stages:
             - test:
                 jobs:
