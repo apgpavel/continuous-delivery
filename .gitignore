@@ -6,4 +6,4 @@ __pycache__
 node_modules/
 reports/
 .env
-gocd/agent/ssh/id*
+gocd/server/ssh/*_rsa*
