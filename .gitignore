@@ -6,4 +6,5 @@ __pycache__
 node_modules/
 reports/
 .env
-gocd/server/ssh/*_rsa*
+gocd/server/ssh/**
+!gocd/server/ssh/put-ssh-key-here
