@@ -114,7 +114,6 @@ def deploy(environment):
         client.close()
     except paramiko.SSHException as err:
         error()
-        click.echo('Could not connect to server. You need to manually establish a connection first to add it to your known hosts')
         click.echo(err)
         exit(1)
 
