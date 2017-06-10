@@ -1,18 +1,36 @@
 language: python
+
 python:
-- '2.7'
-- '3.5'
+    - '2.7'
+    - '3.5'
+
 env:
-- VERSION=$TRAVIS_BUILD_NUMBER
+    - VERSION=$TRAVIS_BUILD_NUMBER
+
 sudo: required
+
 services:
-- docker
+    - docker
+
 install: "./go setup"
+
 script:
-- "./go test"
-- "./go build"
-- "./go push"
-- "./go deploy staging"
-before_install:
-- openssl aes-256-cbc -K $encrypted_cc3634e51901_key -iv $encrypted_cc3634e51901_iv
-  -in travis_rsa.enc -out travis_rsa -d
+    - "./go test"
+    - "./go build"
+    - "./go push"
+
+addons:
+    ssh_known_hosts: "138.68.72.121"
+
+before_deploy:
+    - openssl aes-256-cbc -K $encrypted_cc3634e51901_key -iv $encrypted_cc3634e51901_iv -in travis_rsa.enc -out /tmp/travis_rsa -d
+    - eval "$(ssh-agent -s)"
+    - chmod 600 /tmp/travis_rsa
+    - ssh-add /tmp/travis_rsa
+
+deploy:
+    provider: script
+    skip_cleanup: true
+    script: "./go deploy staging"
+    on:
+        branch: master
